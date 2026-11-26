@@ -6,7 +6,7 @@
 Built for **Share-Net Bangladesh AI & TGBV Hackathon 2026**  
 **Track:** Theme 3: Empowerment and Response  
 **Venue & Finals:** Hotel Sheraton, Banani, Dhaka (December 2026)
-
+**Prototype Link:** https://protirodh360.vercel.app/
 ---
 
 ## 🌟 The Core Innovation: Explainable Decision Engine (SSDE)
