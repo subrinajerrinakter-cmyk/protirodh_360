@@ -25,56 +25,28 @@ export const Detect: React.FC = () => {
     setContextField,
     findings,
     contextExplanations,
+    incidents,
     addIncidentFromCurrent,
     loadJourney,
     activeJourney,
   } = useSession();
 
   const isBn = language === 'bn';
-  const [showConsentQuestions, setShowConsentQuestions] = useState(true);
+  const [showConsentQuestions, setShowConsentQuestions] = useState(false);
 
   // Check if current text has matches
   const hasFindings = findings.length > 0;
-  const primaryFinding = findings[0];
-  const primaryExplanation = contextExplanations[0];
+  const saved = incidents.some((incident) => incident.text === inputText && incident.consentContext && (
+    Object.entries(incident.consentContext).every(([field, value]) => context[field as keyof typeof context] === value)
+  ));
 
   return (
     <div className="max-w-content mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-6">
-        <div className="flex items-center gap-2 text-brand-teal text-sm font-semibold mb-1">
-          <Radar className="w-4 h-4" />
-          <span>{isBn ? 'মডিউল ০১: ইন্টেলিজেন্ট অ্যাবিউজ রাডার' : 'Module 01: Intelligent Abuse Radar'}</span>
-        </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-brand-slate">
-          {isBn ? 'পরিস্থিতি ও বার্তা বিশ্লেষণ' : 'Situation & Message Analysis'}
+          {isBn ? 'বার্তা যাচাই করুন' : 'Check a message'}
         </h1>
-        <p className="text-sm text-brand-muted mt-1">
-          {isBn
-            ? 'সন্দেহজনক বার্তা পেস্ট করুন অথবা কাল্পনিক উদাহরণ দিয়ে পরীক্ষা করুন। কোনো ডেটা সার্ভারে যায় না।'
-            : 'Paste a concerning message or try realistic fictional examples. 100% processed locally on your device.'}
-        </p>
-      </div>
-
-      {/* Quick Fictional Demo Selector */}
-      <div className="bg-white rounded-lg p-3.5 border border-slate-200 mb-6 flex flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold text-brand-deep flex items-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-brand-teal" />
-          {isBn ? 'দ্রুত ডেমো নির্বাচন:' : 'Quick Demo Scenarios:'}
-        </span>
-        {FICTIONAL_JOURNEYS.map((j) => (
-          <button
-            key={j.id}
-            onClick={() => loadJourney(j.id)}
-            className={`text-xs px-2.5 py-1 rounded transition border ${
-              activeJourney?.id === j.id
-                ? 'bg-brand-teal text-white border-brand-teal font-medium'
-                : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border-slate-200'
-            }`}
-          >
-            {j.title[language]}
-          </button>
-        ))}
       </div>
 
       {/* Main Grid: Input on left, Analysis & Context on right */}
@@ -83,8 +55,8 @@ export const Detect: React.FC = () => {
         <div className="lg:col-span-6 space-y-4">
           <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
             <div className="flex items-center justify-between mb-2">
-              <label htmlFor="abuse-radar-text-input" className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                {isBn ? 'বার্তার বিবরণ (বাংলা, বাংলিশ বা ইংরেজি):' : 'Message Content (Bangla, Banglish, English):'}
+              <label htmlFor="abuse-radar-text-input" className="text-sm font-semibold text-brand-deep">
+                {isBn ? 'বার্তা লিখুন বা পেস্ট করুন' : 'Type or paste a message'}
               </label>
               <span className="text-[11px] text-slate-400">
                 {inputText.length} / 10,000 {isBn ? 'অক্ষর' : 'characters'}
@@ -96,8 +68,8 @@ export const Detect: React.FC = () => {
               <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
               <span>
                 {isBn
-                  ? 'সতর্কতা: আপনার স্ক্রিন যদি অন্য কেউ দেখতে পায় বা ডিভাইস মনিটর করা হয়, তবে সরাসরি পেস্ট করার আগে নিরাপদ স্থান নিশ্চিত করুন।'
-                  : 'Precaution: If someone can view your screen, ensure you are in a private space before pasting.'}
+                  ? 'অন্য কেউ আপনার স্ক্রিন দেখতে পেলে এখানে ব্যক্তিগত বার্তা পেস্ট করবেন না।'
+                  : 'Only paste a private message if your screen is safe from others’ view.'}
               </span>
             </div>
 
@@ -105,20 +77,16 @@ export const Detect: React.FC = () => {
               id="abuse-radar-text-input"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
-              placeholder={
-                isBn
-                  ? 'যেমন: "ছবি ভাইরাল করে দিব", "লোকেশন পাঠাও ekhon", "পাসওয়ার্ড না দিলে ব্রেকআপ"...'
-                  : 'e.g. "Share your location right now", "password dao nahole break up", "chobi viral kore dibo"...'
-              }
-              rows={6}
+              placeholder={isBn ? "বাংলা, বাংলিশ বা ইংরেজি" : "Bangla, Banglish or English"}
+              rows={5}
               maxLength={10000}
               className="w-full p-3 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-teal/40 focus:border-brand-teal font-sans text-brand-slate placeholder:text-slate-400"
             />
 
-            <div className="flex items-center justify-between mt-3 text-xs text-slate-500">
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600">
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                <span>{isBn ? 'ইন-মেমোরি প্রসেসিং (CPU)' : 'Client-side CPU evaluation'}</span>
+                <span>{isBn ? 'আপনার লেখা এই ডিভাইসেই থাকে' : 'Your text stays on this device'}</span>
               </div>
               {inputText && (
                 <button
@@ -132,12 +100,34 @@ export const Detect: React.FC = () => {
             </div>
           </div>
 
+          <details className="rounded-xl border border-slate-200 bg-white px-5">
+            <summary className="min-h-11 cursor-pointer py-3 font-semibold text-brand-deep">
+              {isBn ? 'একটি উদাহরণ দিয়ে দেখুন' : 'Try an example'}
+            </summary>
+            <div className="flex flex-wrap gap-2 pb-4">
+              {FICTIONAL_JOURNEYS.map((j) => (
+                <button
+                  key={j.id}
+                  onClick={() => loadJourney(j.id)}
+                  aria-pressed={activeJourney?.id === j.id}
+                  className={`min-h-10 px-3 text-sm rounded-lg transition border ${
+                    activeJourney?.id === j.id
+                      ? 'bg-brand-teal text-white border-brand-teal font-medium'
+                      : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border-slate-200'
+                  }`}
+                >
+                  {j.title[language]}
+                </button>
+              ))}
+            </div>
+          </details>
+
           {/* Context Contrast Demonstration Box (When Active Journey C is selected) */}
           {activeJourney?.contrastPair && (
             <div className="bg-emerald-50/60 border border-emerald-300 rounded-xl p-4">
               <h2 className="text-xs font-bold uppercase text-emerald-900 tracking-wider flex items-center gap-1.5 mb-2">
                 <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
-                {isBn ? 'কনটেক্সট কন্ট্রাস্ট ডেমো (বিচারকদের জন্য)' : 'Context Contrast Demo (Flagship Moment)'}
+                {isBn ? 'পরিস্থিতি বদলালে ফল কীভাবে বদলায়' : 'How context changes the result'}
               </h2>
               <p className="text-xs text-emerald-800 mb-3">
                 {activeJourney.contrastPair.explanation[language]}
@@ -191,13 +181,14 @@ export const Detect: React.FC = () => {
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-sm font-bold text-brand-slate flex items-center gap-1.5">
                 <HelpCircle className="w-4 h-4 text-brand-teal" />
-                <span>{isBn ? 'প্রাসঙ্গিক মূল্যায়ন প্রশ্নাবলি' : 'Contextual Circumstances'}</span>
+                <span>{isBn ? 'পরিস্থিতি সম্পর্কে আরও জানান' : 'Add context'}</span>
               </h2>
               <button
                 onClick={() => setShowConsentQuestions(!showConsentQuestions)}
+                aria-expanded={showConsentQuestions}
                 className="text-xs text-brand-teal hover:underline font-medium"
               >
-                {showConsentQuestions ? (isBn ? 'লুকান' : 'Collapse') : isBn ? 'দেখান' : 'Expand'}
+                {showConsentQuestions ? (isBn ? 'লুকান' : 'Hide') : isBn ? 'দেখুন' : 'Show questions'}
               </button>
             </div>
 
@@ -210,11 +201,12 @@ export const Detect: React.FC = () => {
                       ? '১. আপনি যদি অসম্মতি জানান বা "না" বলেন, অপরপক্ষ কি তা মেনে নিয়েছে?'
                       : '1. If you expressed discomfort or refused, was your boundary respected?'}
                   </p>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     {(['yes', 'no', 'unknown'] as const).map((val) => (
                       <button
                         key={val}
                         onClick={() => setContextField('refusalRespected', val)}
+                        aria-pressed={context.refusalRespected === val}
                         className={`px-3 py-1 rounded text-xs capitalize transition ${
                           context.refusalRespected === val
                             ? val === 'no'
@@ -236,11 +228,12 @@ export const Detect: React.FC = () => {
                       ? '২. এই দাবি বা চাপ কি বারবার ঘটছে?'
                       : '2. Has this demand or pressure occurred repeatedly over time?'}
                   </p>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     {(['yes', 'no', 'unknown'] as const).map((val) => (
                       <button
                         key={val}
                         onClick={() => setContextField('repeated', val)}
+                        aria-pressed={context.repeated === val}
                         className={`px-3 py-1 rounded text-xs capitalize transition ${
                           context.repeated === val
                             ? val === 'yes'
@@ -262,11 +255,12 @@ export const Detect: React.FC = () => {
                       ? '৩. অন্য কারো কি এই ফোনের পাসওয়ার্ড বা স্ক্রিন দেখার সুযোগ আছে?'
                       : '3. Does someone else have physical access or know the PIN to this device?'}
                   </p>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     {(['yes', 'no', 'unknown'] as const).map((val) => (
                       <button
                         key={val}
                         onClick={() => setContextField('deviceAccess', val)}
+                        aria-pressed={context.deviceAccess === val}
                         className={`px-3 py-1 rounded text-xs capitalize transition ${
                           context.deviceAccess === val
                             ? val === 'yes'
@@ -288,11 +282,12 @@ export const Detect: React.FC = () => {
                       ? '৪. এই মুহূর্তে কি কোনো শারীরিক বিপদ বা তাৎক্ষণিক সহিংসতার আশঙ্কা আছে?'
                       : '4. Is there an immediate concern for your physical safety right now?'}
                   </p>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     {(['yes', 'no', 'unknown'] as const).map((val) => (
                       <button
                         key={val}
                         onClick={() => setContextField('immediateConcern', val)}
+                        aria-pressed={context.immediateConcern === val}
                         className={`px-3 py-1 rounded text-xs capitalize transition ${
                           context.immediateConcern === val
                             ? val === 'yes'
@@ -315,7 +310,7 @@ export const Detect: React.FC = () => {
         <div className="lg:col-span-6 space-y-4">
           <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
             <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3 flex items-center justify-between">
-              <span>{isBn ? 'ইঞ্জিন পর্যবেক্ষণ ও ব্যাখ্যা' : 'Engine Findings & Rationale'}</span>
+              <span>{isBn ? 'বার্তায় যা বোঝা যেতে পারে' : 'What the message may show'}</span>
               {hasFindings && (
                 <span className="text-[11px] bg-brand-tint text-brand-deep px-2 py-0.5 rounded font-mono font-medium">
                   {findings.length} {isBn ? 'ইন্ডিকেটর' : 'Indicator(s)'}
@@ -325,9 +320,9 @@ export const Detect: React.FC = () => {
 
             {!inputText.trim() ? (
               <div className="text-center py-12 px-4 text-slate-400">
-                <Radar className="w-10 h-10 mx-auto text-slate-300 mb-2 animate-pulse" />
+                <Radar className="w-10 h-10 mx-auto text-slate-300 mb-2" />
                 <p className="text-sm font-medium">
-                  {isBn ? 'বামপাশে টেক্সট লিখুন বা উপরের ডেমো ক্লিক করুন' : 'Enter text on the left or select a demo scenario'}
+                  {isBn ? 'বার্তা দিলে এখানে ফলাফল দেখাবে' : 'Your results will appear here.'}
                 </p>
                 <p className="text-xs mt-1">
                   {isBn ? 'ইঞ্জিন স্বয়ংক্রিয়ভাবে প্রমাণ স্প্যান শনাক্ত করবে।' : 'The SSDE will highlight evidence spans locally.'}
@@ -383,7 +378,6 @@ export const Detect: React.FC = () => {
                               ? isBn ? 'স্পষ্ট ঝুঁকি ইন্ডিকেটর' : 'Explicit Coercion'
                               : isBn ? 'সম্ভাব্য প্যাটার্ন' : 'Possible Pattern'}
                           </span>
-                          <span className="text-xs font-mono text-slate-500">{f.category}</span>
                         </div>
                       </div>
 
@@ -391,7 +385,7 @@ export const Detect: React.FC = () => {
                       {f.spans.length > 0 && (
                         <div className="bg-white/80 rounded p-2.5 my-2 border border-slate-200 text-xs">
                           <span className="font-semibold text-slate-500 mr-1.5">
-                            {isBn ? 'শনাক্তকৃত স্প্যান:' : 'Matched Span:'}
+                            {isBn ? 'যে কথাটি খেয়াল করুন' : 'Phrase flagged'}
                           </span>
                           <span className="font-semibold text-brand-slate bg-yellow-100 px-1 py-0.5 rounded">
                             "{f.spans[0].matchedText}"
@@ -408,7 +402,7 @@ export const Detect: React.FC = () => {
                       {expl && expl.contextInfluences.length > 0 && (
                         <div className="mt-3 pt-2.5 border-t border-slate-200/80 space-y-1">
                           <span className="text-[11px] font-semibold text-slate-600 block">
-                            {isBn ? 'পরিস্থিতির প্রভাব (Context Reason):' : 'Contextual Influences:'}
+                            {isBn ? 'পরিস্থিতির প্রভাব' : 'How context affects this'}
                           </span>
                           {expl.contextInfluences.map((inf, i) => (
                             <div key={i} className="flex items-start gap-1.5 text-[11px] text-slate-700">
@@ -437,17 +431,18 @@ export const Detect: React.FC = () => {
               <div className="mt-5 pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <button
                   onClick={addIncidentFromCurrent}
-                  className="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-brand-slate font-medium px-4 py-2 rounded-lg text-xs transition flex items-center justify-center gap-1.5"
+                  disabled={saved}
+                  className="flex min-h-11 w-full items-center justify-center gap-1.5 rounded-lg bg-slate-100 px-4 py-2 text-sm font-medium text-brand-slate transition hover:bg-slate-200 disabled:bg-brand-tint sm:w-auto"
                 >
                   <GitCommit className="w-3.5 h-3.5 text-brand-teal" />
-                  <span>{isBn ? 'টাইমলাইন ট্র্যাকার-এ যোগ করুন' : 'Add to Pattern Timeline'}</span>
+                  <span>{saved ? (isBn ? 'ঘটনার তালিকায় যোগ হয়েছে' : 'Saved to incident history') : (isBn ? 'ঘটনার তালিকায় যোগ করুন' : 'Save to incident history')}</span>
                 </button>
 
                 <button
                   onClick={() => navigate('/respond')}
-                  className="w-full sm:w-auto bg-brand-teal hover:bg-teal-600 text-white font-semibold px-4 py-2 rounded-lg text-xs transition flex items-center justify-center gap-1.5 shadow-xs"
+                  className="flex min-h-11 w-full items-center justify-center gap-1.5 rounded-lg bg-brand-deep px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-teal sm:w-auto"
                 >
-                  <span>{isBn ? 'নিরাপদ রেসপন্স দেখুন' : 'Explore Response Options'}</span>
+                  <span>{isBn ? 'নিরাপদ রেসপন্স দেখুন' : 'See safety steps'}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>

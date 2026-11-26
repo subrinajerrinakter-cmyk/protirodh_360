@@ -26,17 +26,11 @@ export const Shield: React.FC = () => {
     <div className="max-w-content mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-6">
-        <div className="flex items-center gap-2 text-brand-teal text-sm font-semibold mb-1">
-          <ShieldCheck className="w-4 h-4" />
-          <span>{isBn ? 'মডিউল ০৫: ডিজিটাল সেফটি চেকআপ' : 'Module 05: Digital Safety Checkup'}</span>
-        </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-brand-slate">
-          {isBn ? 'ডিভাইস ও অ্যাকাউন্ট নিরাপত্তা নিরীক্ষা' : 'Device & Account Security Audit'}
+          {isBn ? 'ডিভাইস ও অ্যাকাউন্ট সুরক্ষা' : 'Secure your devices and accounts'}
         </h1>
         <p className="text-sm text-brand-muted mt-1 leading-relaxed">
-          {isBn
-            ? 'কোনো বিভ্রান্তিকর "নিরাপত্তা স্কোর" দেওয়ার বদলে এটি একটি অগ্রাধিকারপ্রাপ্ত চেকলিস্ট। জানুন কোনো সেটিংস পরিবর্তন করার সম্ভাব্য ঝুঁকি।'
-            : 'A prioritized practical checklist without arbitrary safety scores. Review logged-in devices and shared access points.'}
+          {isBn ? 'কোথায় লগইন আছে আর কার সঙ্গে তথ্য শেয়ার হচ্ছে, দেখে নিন।' : 'Check where you’re signed in and who has access.'}
         </p>
       </div>
 

@@ -18,17 +18,11 @@ export const Rights: React.FC = () => {
     <div className="max-w-content mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-6">
-        <div className="flex items-center gap-2 text-brand-teal text-sm font-semibold mb-1">
-          <Scale className="w-4 h-4" />
-          <span>{isBn ? 'মডিউল ০৮: অধিকার ও আইনি কাঠামো' : 'Module 08: Rights Navigator'}</span>
-        </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-brand-slate">
-          {isBn ? 'ডিজিটাল অধিকার ও বাংলাদেশের সাইবার আইন' : 'Digital Rights & Legal Framework in Bangladesh'}
+          {isBn ? 'আপনার ডিজিটাল অধিকার' : 'Your digital rights'}
         </h1>
         <p className="text-sm text-brand-muted mt-1 leading-relaxed">
-          {isBn
-            ? 'ডিজিটাল জেন্ডারভিত্তিক সহিংসতার শিকার ব্যক্তিদের সুরক্ষা প্রদানে প্রচলিত আইন ও প্রমাণ সংরক্ষণের অধিকার।'
-            : 'Reviewed educational cards on consent, image-based abuse, and evidentiary considerations in Bangladesh.'}
+          {isBn ? 'বাংলাদেশে সম্মতি, ছবি ছড়ানোর হুমকি ও প্রমাণ সংরক্ষণ সম্পর্কে জানুন।' : 'Learn about consent, image abuse, and keeping evidence in Bangladesh.'}
         </p>
       </div>
 

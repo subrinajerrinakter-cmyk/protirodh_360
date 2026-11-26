@@ -35,17 +35,11 @@ export const Respond: React.FC = () => {
     <div className="max-w-content mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-6">
-        <div className="flex items-center gap-2 text-brand-teal text-sm font-semibold mb-1">
-          <LifeBuoy className="w-4 h-4" />
-          <span>{isBn ? 'মডিউল ০৩: রেসপন্স ল্যাব' : 'Module 03: Response Lab'}</span>
-        </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-brand-slate">
-          {isBn ? 'নিরাপদ পদক্ষেপ ও সিদ্ধান্ত নির্বাচন' : 'Safe Actions & Decision Cards'}
+          {isBn ? 'নিরাপদ পদক্ষেপ' : 'Choose safety steps'}
         </h1>
         <p className="text-sm text-brand-muted mt-1 leading-relaxed">
-          {isBn
-            ? 'কোনো রোবট বা চ্যাটবটের ভুল পরামর্শের বদলে বিশেষজ্ঞদের তৈরি অডিটেবল সেফটি কার্ড। আপনার প্রয়োজনীয় পদক্ষেপগুলো বেছে নিয়ে নিরাপত্তা পরিকল্পনায় যুক্ত করুন।'
-            : 'Interactive decision cards instead of unvetted chatbot replies. Select steps relevant to your situation to build your custom safety plan.'}
+          {isBn ? 'আপনার জন্য কাজে আসবে এমন পদক্ষেপ পরিকল্পনায় যোগ করুন।' : 'Add steps that fit your situation to your safety plan.'}
         </p>
       </div>
 

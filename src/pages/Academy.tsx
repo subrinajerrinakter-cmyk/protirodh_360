@@ -31,17 +31,11 @@ export const Academy: React.FC = () => {
     <div className="max-w-content mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-6">
-        <div className="flex items-center gap-2 text-brand-teal text-sm font-semibold mb-1">
-          <BookOpen className="w-4 h-4" />
-          <span>{isBn ? 'মডিউল ০৬: ডিজিটাল ডিফেন্স একাডেমি' : 'Module 06: Digital Defence Academy'}</span>
-        </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-brand-slate">
-          {isBn ? 'কাল্পনিক অনুশীলন ও আত্মরক্ষা শিক্ষা' : 'Fictional Interactive Scenarios'}
+          {isBn ? 'উদাহরণ দিয়ে শিখুন' : 'Practice with examples'}
         </h1>
         <p className="text-sm text-brand-muted mt-1 leading-relaxed">
-          {isBn
-            ? 'বাস্তব জীবনের ৬টি জটিল ডিজিটাল পরিস্থিতি নিয়ে কাল্পনিক অনুশীলন। কোনো ভুল উত্তরের জন্য দোষারোপ নেই; জানুন প্রতিটি সিদ্ধান্তের প্রভাব।'
-            : 'Learn by exploring trade-offs in 6 realistic fictional scenarios. Non-blaming feedback explains real safety consequences.'}
+          {isBn ? 'একটি কাল্পনিক পরিস্থিতি বেছে নিয়ে দেখুন কী করতে পারেন।' : 'Pick a fictional situation and explore your choices.'}
         </p>
       </div>
 

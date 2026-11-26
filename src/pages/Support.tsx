@@ -31,17 +31,11 @@ export const Support: React.FC = () => {
     <div className="max-w-content mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-6">
-        <div className="flex items-center gap-2 text-brand-teal text-sm font-semibold mb-1">
-          <PhoneCall className="w-4 h-4" />
-          <span>{isBn ? 'মডিউল ০৭: সহায়তা ডিরেক্টরি' : 'Module 07: Support Navigator'}</span>
-        </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-brand-slate">
-          {isBn ? 'যাচাইকৃত হেল্পলাইন ও আইনি সহায়তা' : 'Verified Directory of Support Services'}
+          {isBn ? 'সহায়তা নিন' : 'Get support'}
         </h1>
         <p className="text-sm text-brand-muted mt-1 leading-relaxed">
-          {isBn
-            ? 'বাংলাদেশে সাইবার হয়রানি ও জেন্ডারভিত্তিক সহিংসতায় সহায়তাকারী আনুষ্ঠানিক পুলিশ হেল্পলাইন, লিগ্যাল এইড ও মানসিক স্বাস্থ্য সেবা।'
-            : 'Curated, dated directory of vetted support services including Police Cyber Support for Women, emergency 999, and free legal aid.'}
+          {isBn ? 'বাংলাদেশে জরুরি, আইনি ও মানসিক স্বাস্থ্য সহায়তা খুঁজুন।' : 'Find emergency, legal, and mental health support in Bangladesh.'}
         </p>
       </div>
 

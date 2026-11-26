@@ -49,17 +49,11 @@ export const Plan: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <div className="flex items-center gap-2 text-brand-teal text-sm font-semibold mb-1">
-            <FileCheck2 className="w-4 h-4" />
-            <span>{isBn ? 'মডিউল ০৪: সেফটি প্ল্যান জেনারেটর' : 'Module 04: Safety Plan Generator'}</span>
-          </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-brand-slate">
-            {isBn ? 'আপনার ব্যক্তিগত নিরাপত্তা পরিকল্পনা' : 'Your Personal Safety Action Plan'}
+            {isBn ? 'আপনার নিরাপত্তা পরিকল্পনা' : 'Your safety plan'}
           </h1>
           <p className="text-sm text-brand-muted mt-1">
-            {isBn
-              ? 'নির্বাচিত পদক্ষেপগুলো সাজান, ব্যক্তিগত নোট যোগ করুন এবং নিরাপদে সংরক্ষণ বা প্রিন্ট করুন।'
-              : 'Review selected actions, add personal instructions, and safely preview or export.'}
+            {isBn ? 'আপনার পদক্ষেপগুলো দেখুন এবং দরকার হলে নোট যোগ করুন।' : 'Review your steps and add notes if you need them.'}
           </p>
         </div>
 

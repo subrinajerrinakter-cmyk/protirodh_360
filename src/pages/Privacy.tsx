@@ -67,12 +67,8 @@ export const Privacy: React.FC = () => {
     <div className="max-w-content mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-6">
-        <div className="flex items-center gap-2 text-brand-teal text-sm font-semibold mb-1">
-          <Lock className="w-4 h-4" />
-          <span>{isBn ? 'মডিউল ১১: প্রাইভেসি অভিভাবক ও থ্রেট মডেল' : 'Module 11: Privacy Guardian & Threat Model'}</span>
-        </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-brand-slate">
-          {isBn ? 'গোপনীয়তা, নিরাপত্তা ও প্রযুক্তিগত নিশ্চয়তা' : 'Privacy & Security Guarantees'}
+          {isBn ? 'আপনার গোপনীয়তা' : 'Your privacy'}
         </h1>
         <p className="text-sm text-brand-muted mt-1 leading-relaxed">
           {isBn
@@ -110,6 +106,25 @@ export const Privacy: React.FC = () => {
           <span>{isBn ? 'সকল মেমোরি সফলভাবে মুছে ফেলা হয়েছে।' : 'All in-memory state purged.'}</span>
         </div>
       )}
+
+      <details className="mb-6 rounded-xl border border-slate-200 bg-white p-5">
+        <summary className="cursor-pointer font-semibold text-brand-deep">
+          {isBn ? 'দ্রুত প্রস্থানের সেটিংস' : 'Quick exit settings'}
+        </summary>
+        <p className="mt-3 text-sm text-brand-muted">
+          {isBn ? 'দ্রুত প্রস্থান করলে এই সেশনের তথ্য মুছে যাবে। ব্রাউজার হিস্ট্রি থেকে যাবে।' : 'Quick exit clears this session. Your browser history stays on the device.'}
+        </p>
+        <label className="mt-3 block text-sm font-medium" htmlFor="quick-exit-url">
+          {isBn ? 'প্রস্থানের পর যে ওয়েবসাইট খুলবে' : 'Website to open on exit'}
+        </label>
+        <input
+          id="quick-exit-url"
+          type="url"
+          value={quickExitUrl}
+          onChange={(event) => setQuickExitUrl(event.target.value)}
+          className="mt-2 w-full max-w-md rounded-lg border border-slate-300 px-3 py-2 text-sm"
+        />
+      </details>
 
       {/* Threat Model Matrix */}
       <div className="bg-white rounded-xl border border-slate-200 p-6 mb-8 shadow-xs">

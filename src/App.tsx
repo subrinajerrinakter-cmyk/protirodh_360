@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { SessionProvider } from './state/session';
 import { Navbar } from './components/Navbar';
-import { SafeExitBanner } from './components/SafeExitBanner';
 import { Footer } from './components/Footer';
 
 // Pages
@@ -23,9 +22,6 @@ export const App: React.FC = () => {
     <SessionProvider>
       <Router>
         <div className="min-h-screen flex flex-col bg-brand-cream text-brand-slate">
-          {/* Top discreet safe exit banner */}
-          <SafeExitBanner />
-
           {/* Top navigation header */}
           <Navbar />
 

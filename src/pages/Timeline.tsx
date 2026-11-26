@@ -52,17 +52,11 @@ export const Timeline: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <div className="flex items-center gap-2 text-brand-teal text-sm font-semibold mb-1">
-            <GitCommit className="w-4 h-4" />
-            <span>{isBn ? 'মডিউল ০২: কোয়ের্সন প্যাটার্ন ট্র্যাকার' : 'Module 02: Coercion Pattern Tracker'}</span>
-          </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-brand-slate">
-            {isBn ? 'ঘটনার ধারাবাহিকতা ও প্যাটার্ন' : 'Incident Timeline & Patterns'}
+            {isBn ? 'ঘটনার তালিকা' : 'Incident history'}
           </h1>
           <p className="text-sm text-brand-muted mt-1">
-            {isBn
-              ? 'বিচ্ছিন্ন ঘটনাগুলো এক জায়গায় করে ধারাবাহিক নিয়ন্ত্রণ বা ব্ল্যাকমেইলের প্যাটার্ন বুঝুন। কোনো নাম বা পরিচয় সংগ্রহ করা হয় না।'
-              : 'Connect distinct moments to identify patterns of surveillance or pressure over time. No personal identities stored.'}
+            {isBn ? 'ঘটনাগুলো একসঙ্গে দেখে বুঝুন কোনো আচরণ বারবার ঘটছে কি না।' : 'Review incidents together to see if a pattern is repeating.'}
           </p>
         </div>
 
